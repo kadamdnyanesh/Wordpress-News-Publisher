@@ -1,6 +1,46 @@
-# news-publisher
+# Publish News to WordPress
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue.js application for publishing news articles to WordPress with SEO optimization.
+
+## Features
+
+- Rich text editor for news content
+- SEO metadata management
+- WordPress integration
+- Modern UI with Tailwind CSS
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file with your WordPress credentials:
+   ```
+   VITE_WORDPRESS_URL=your-wordpress-site-url
+   VITE_WORDPRESS_USERNAME=your-username
+   VITE_WORDPRESS_PASSWORD=your-application-password
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Build
+
+To build the application for production:
+
+```bash
+npm run build
+```
+
+## Technologies Used
+
+- Vue 3
+- Tailwind CSS
+- WordPress REST API
+- Vite
 
 ## Recommended IDE Setup
 
@@ -9,21 +49,3 @@ This template should help get you started developing with Vue 3 in Vite.
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```

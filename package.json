@@ -1,7 +1,7 @@
 {
-  "name": "news-publisher",
-  "version": "0.0.0",
+  "name": "publish-news-to-wordpress",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,18 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.8.4",
-    "base-64": "^1.0.0",
-    "vue": "^3.5.13"
+    "vue": "^3.4.15"
   },
   "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.2.17",
-    "@vitejs/plugin-vue": "^4.5.2",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "postcss-nesting": "^13.0.1",
-    "tailwindcss": "^4.1.5",
-    "vite": "^4.5.2",
-    "vite-plugin-vue-devtools": "^7.7.2"
+    "@vitejs/plugin-vue": "^5.0.3",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.0.12"
   }
 }
