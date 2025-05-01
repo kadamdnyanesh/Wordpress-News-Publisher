@@ -1,5 +1,5 @@
 {
-  "name": "publish-news-to-wordpress",
+  "name": "wordpress-news-publisher",
   "private": true,
   "version": "0.0.0",
   "type": "module",

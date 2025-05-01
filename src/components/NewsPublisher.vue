@@ -292,32 +292,9 @@
 <script setup>
 import { ref, computed } from "vue";
 import { postNewsToWordPress } from "../services/wordpressService";
+import newsData from "../assets/newsData.json";
 
-const article = ref({
-  title:
-    "Eurovision Song Contest 2025: Germany's Entry Abor & Tynna Overcome Setbacks",
-  slug: "eurovision-song-contest-2025-germany-abor-tynna",
-  content: "",
-  meta: {
-    _yoast_wpseo_title:
-      "Eurovision Song Contest 2025: Germany's Entry Abor & Tynna Overcome Setbacks",
-    _yoast_wpseo_metadesc:
-      "Germany's ESC 2025 act Abor & Tynna return stronger after setbacks. Discover how they aim to make an impact in Basel.",
-    _yoast_wpseo_focuskw: "Eurovision Song Contest 2025 Germany",
-    _yoast_wpseo_focuskw_text_input: "Eurovision Song Contest 2025 Germany",
-    _yoast_wpseo_canonical:
-      "https://www.example.com/eurovision-song-contest-2025-germany-abor-tynna",
-    _yoast_wpseo_news_keywords:
-      "Eurovision Song Contest 2025, Germany, Abor & Tynna, Stefan Raab, ESC 2025",
-    _yoast_wpseo_robots_index: "1",
-    _yoast_wpseo_robots_follow: "1",
-    _yoast_wpseo_cornerstone: "false",
-    _yoast_wpseo_primary_category: "1",
-  },
-  status: "publish",
-  date: "2025-04-30T10:00:00",
-  format: "standard",
-});
+const article = ref(newsData);
 
 const isPublishing = ref(false);
 const message = ref(null);

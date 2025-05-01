@@ -1,4 +1,4 @@
-# Publish News to WordPress
+# WordPress News Publisher
 
 A Vue.js application for publishing news articles to WordPress with SEO optimization.
 
