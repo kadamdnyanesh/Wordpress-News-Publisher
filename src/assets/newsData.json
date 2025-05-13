@@ -2,6 +2,8 @@
   "title": "",
   "slug": "",
   "content": "",
+  "format": "standard",
+  "status": "draft",
   "meta": {
     "_yoast_wpseo_title": "",
     "_yoast_wpseo_metadesc": "",
@@ -13,8 +15,5 @@
     "_yoast_wpseo_robots_follow": "1",
     "_yoast_wpseo_cornerstone": "false",
     "_yoast_wpseo_primary_category": "1"
-  },
-  "status": "publish",
-  "date": "2025-04-30T10:00:00",
-  "format": "standard"
+  }
 }

@@ -5,6 +5,47 @@
         <h1 class="text-3xl font-bold text-gray-900 mb-8">
           Publish News to WordPress
         </h1>
+
+        <!-- JSON Input Section -->
+        <div class="mb-8 p-4 bg-gray-50 rounded-xl">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            Import JSON Data
+          </h3>
+          <div class="space-y-2">
+            <textarea
+              v-model="jsonInput"
+              rows="10"
+              placeholder="Paste your JSON data here"
+              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors font-mono text-sm"
+            ></textarea>
+            <div class="flex space-x-4">
+              <button
+                @click="importJsonData"
+                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Import JSON
+              </button>
+              <button
+                @click="exportJsonData"
+                class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              >
+                Clear
+              </button>
+            </div>
+            <div
+              v-if="jsonMessage"
+              :class="[
+                'p-3 rounded-lg text-sm font-medium',
+                jsonMessage.type === 'success'
+                  ? 'bg-green-50 text-green-800 border border-green-200'
+                  : 'bg-red-50 text-red-800 border border-red-200',
+              ]"
+            >
+              {{ jsonMessage.text }}
+            </div>
+          </div>
+        </div>
+
         <form @submit.prevent="publishNews" class="space-y-8">
           <!-- Title -->
           <div class="space-y-2">
@@ -50,7 +91,7 @@
             <input
               type="datetime-local"
               id="date"
-              v-model="article.date"
+              v-model="formattedDate"
               required
               class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             />
@@ -294,7 +335,51 @@ import { ref, computed } from "vue";
 import { postNewsToWordPress } from "../services/wordpressService";
 import newsData from "../assets/newsData.json";
 
-const article = ref(newsData);
+// Function to get current local time in ISO format
+const getCurrentLocalTime = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+};
+
+// Format the initial date in the newsData
+const formattedNewsData = {
+  ...newsData,
+  date: getCurrentLocalTime(),
+};
+
+const article = ref(formattedNewsData);
+
+// Computed property for the date input
+const formattedDate = computed({
+  get: () => {
+    if (!article.value.date) return "";
+    const date = new Date(article.value.date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  },
+  set: (newValue) => {
+    if (newValue) {
+      const date = new Date(newValue);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const hours = String(date.getHours()).padStart(2, "0");
+      const minutes = String(date.getMinutes()).padStart(2, "0");
+      const seconds = String(date.getSeconds()).padStart(2, "0");
+      article.value.date = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+    }
+  },
+});
 
 const isPublishing = ref(false);
 const message = ref(null);
@@ -311,12 +396,12 @@ const publishNews = async () => {
         type: "success",
         text: `News published successfully! View it here: ${result.link}`,
       };
-      // Reset form
+      // Reset form with current local time
       article.value = {
         title: "",
         slug: "",
         status: "publish",
-        date: new Date().toISOString().slice(0, 16),
+        date: getCurrentLocalTime(),
         format: "standard",
         content: "",
         meta: {
@@ -356,6 +441,44 @@ const messageClass = computed(() => {
       : "bg-red-100 text-red-700",
   ];
 });
+
+// JSON input handling
+const jsonInput = ref(JSON.stringify(newsData, null, 2));
+const jsonMessage = ref(null);
+
+const importJsonData = () => {
+  try {
+    const parsedData = JSON.parse(jsonInput.value);
+    article.value = {
+      ...parsedData,
+      date: parsedData.date || getCurrentLocalTime(),
+    };
+    jsonMessage.value = {
+      type: "success",
+      text: "JSON data imported successfully!",
+    };
+  } catch (error) {
+    jsonMessage.value = {
+      type: "error",
+      text: `Invalid JSON: ${error.message}`,
+    };
+  }
+};
+
+const exportJsonData = () => {
+  try {
+    jsonInput.value = JSON.stringify(article.value, null, 2);
+    jsonMessage.value = {
+      type: "success",
+      text: "Current data exported to JSON!",
+    };
+  } catch (error) {
+    jsonMessage.value = {
+      type: "error",
+      text: `Error exporting data: ${error.message}`,
+    };
+  }
+};
 </script>
 
 <style>
